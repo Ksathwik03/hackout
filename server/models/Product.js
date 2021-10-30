@@ -15,14 +15,20 @@ const ProductSchema = new mongoose.Schema({
     required: true
   },
   chat_id: {
-      type: String
+      type: String,
+      default: ""
   },
-  dealStatus: {
+  bank: {
     type: String,
     required: true
   },
+  dealStatus: {
+    type: String,
+    default: "Pending"
+  },
   admin_details: {
-    type: String
+    type: String,
+    default: ""
   }
 },{ timestamps: true });
 

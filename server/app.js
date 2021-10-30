@@ -38,6 +38,7 @@ app.use(
 );
 
 app.use("/", require("./Routes/routes.js"));
+app.use("/product",require("./Routes/productRoutes.js"));
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, console.log(`Server started on port ${PORT}`));
