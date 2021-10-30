@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Car = require('./cars')
 const jwt = require('jsonwebtoken')
 const UserSchema = new mongoose.Schema({
   username: {
@@ -29,7 +28,12 @@ const UserSchema = new mongoose.Schema({
         type:String,
     }
   }],
-
+  admin: {default: false},
+  products: [
+    { type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true}
+  ],
   verified: {type: Boolean,default:false},
   verificationToken: {type: String,default: ''},
   resetToken: {type: String, default: ''},

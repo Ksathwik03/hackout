@@ -138,9 +138,9 @@ exports.verifyOnlyCustomers = async(req,res,next)=>{
 
 
 exports.addProfile = async (req, res, next) => {
+  console.log(req.body)
   try {
-    
-    const {password,username,email} = req.body
+    const {username,email,password} = req.body
 
     if (!( password && email && username )) {
       return res.status(400).json({
@@ -149,22 +149,22 @@ exports.addProfile = async (req, res, next) => {
       });
     }
 
-    const saltHash = genPassword(req.body.password);
+    const saltHash = genPassword(password);
     const salt = saltHash.salt;
     const hash = saltHash.hash;
     const secureToken = secureId();
 
-    if(email){
-      if (!validator.isEmail(req.body.email)) {
-        throw new Error("Email is invalid");
-      }
-    }
+    // // if(email){
+    // //   if (!validator.isEmail(req.body.email)) {
+    // //     throw new Error("Email is invalid");
+    // //   }
+    // // }
 
     const newUser = new User({
-      username: req.body.username,
+      username: username,
       hash: hash,
       salt: salt,
-      email: req.body.email,
+      email: email,
       verificationToken: secureToken,
     });
 
@@ -184,10 +184,9 @@ exports.addProfile = async (req, res, next) => {
       // message: 'Verify the email via link to activate your account'
     });
   } catch (err) {
-    console.log("Error occured while registering", err);
-    return res.status(400).json({
+    return res.json({
       success: false,
-      error: `Error Adding User: ${err.message}`,
+      error: `Error Adding User: ${err}`,
     });
   }
 };
@@ -195,6 +194,7 @@ exports.addProfile = async (req, res, next) => {
 
 // -------LOGIN-------
 exports.login = async (req, res, next) => {
+  console.log(req.body)
 
     try {
       const { username, password } = req.body;
@@ -234,7 +234,8 @@ exports.login = async (req, res, next) => {
         error: `Invalid credentials`,
       });
     } catch (err) {
-        return res.status(500).json({
+        return res.json({
+        status: "500",
         success: false,
         error: `Error loging in : ${err.message}`,
       });    
