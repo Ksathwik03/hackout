@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const User = require("../models/user");
+const crypto = require("crypto");
 
 exports.addProduct = async(req,res) => {
     try{
@@ -13,16 +14,23 @@ exports.addProduct = async(req,res) => {
                 message: "Auth token required"
             })
         }
+        const chat_id = crypto.randomBytes(12).toString('hex');
         const product = new Product({
             userId: user._id,
             product_name : product_name,
             product_link: product_link,
-            bank: bank
+            bank: bank,
+            chat_id: chat_id,
+            admin_details: {
+                "admin_id": "i394neuIHS0",
+                "admin_name": "admin"
+            },
         })
         await product.save()
         return res.json({
             stats: 200,
-            sucess: "Successfully created"
+            sucess: "Successfully created",
+            product: product
         }) 
     }
     catch(err){
@@ -68,7 +76,7 @@ exports.getUserProducts = async(req,res) => {
     try{
         const token = req.headers["x-access-token"];
         const user = await User.findOne({'token': token})
-        if(!user || !(user.admin)){
+        if(!user){
             return res.json({
                 stats: 400,
                 sucess: false,
@@ -103,6 +111,33 @@ exports.getAllProducts = async(req,res) => {
             })
         }
         let products = await Product.find({})
+        return res.json({
+            stats: 200,
+            sucess: "Successfully found user products",
+            products: products
+        }) 
+    }
+    catch(err){
+        return res.json({
+            stats: 400,
+            sucess: false,
+            message: `some error ${err}`
+        }) 
+    }
+}
+
+exports.getChat = async(req,res) => {
+    try{
+        const token = req.headers["x-access-token"];
+        const user = await User.findOne({'token': token})
+        if(!user || !(user.admin)){
+            return res.json({
+                stats: 400,
+                sucess: false,
+                message: "Auth token required"
+            })
+        }
+        let products = await Product.find({'chat_id': req.params.cid})
         return res.json({
             stats: 200,
             sucess: "Successfully found user products",

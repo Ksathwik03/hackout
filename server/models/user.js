@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
         type:String,
     }
   }],
-  admin: {default: false},
+  admin: {},
   products: [
     { type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',

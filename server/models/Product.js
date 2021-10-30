@@ -27,8 +27,7 @@ const ProductSchema = new mongoose.Schema({
     default: "Pending"
   },
   admin_details: {
-    type: String,
-    default: ""
+    type: Array,
   }
 },{ timestamps: true });
 
