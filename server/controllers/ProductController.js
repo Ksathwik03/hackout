@@ -56,6 +56,7 @@ exports.updateProductStatus = async(req,res) => {
             })
         }
         const product = await Product.findOne({'_id': req.params.pid})
+        product.dealStatus = dealStatus
         await product.save()
         return res.json({
             stats: 200,
@@ -83,7 +84,8 @@ exports.getUserProducts = async(req,res) => {
                 message: "Auth token required"
             })
         }
-        let products = await Product.find({'userId': user._id})
+        const id = user._id
+        let products = await Product.find({"userId": id})
         return res.json({
             stats: 200,
             sucess: "Successfully found user products",
@@ -130,7 +132,7 @@ exports.getChat = async(req,res) => {
     try{
         const token = req.headers["x-access-token"];
         const user = await User.findOne({'token': token})
-        if(!user || !(user.admin)){
+        if(!user ){
             return res.json({
                 stats: 400,
                 sucess: false,

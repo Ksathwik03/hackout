@@ -28,7 +28,10 @@ const UserSchema = new mongoose.Schema({
         type:String,
     }
   }],
-  admin: {},
+  admin: {
+    default: false,
+    type: Boolean
+  },
   products: [
     { type: mongoose.Schema.Types.ObjectId,
       ref: 'Product',
