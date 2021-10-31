@@ -85,7 +85,13 @@ exports.getUserProducts = async(req,res) => {
             })
         }
         const id = user._id
-        let products = await Product.find({"userId": id})
+        let products
+        if(user.admin){
+            products = await Product.find({})
+        }
+        else{
+        products = await Product.find({"userId": id})
+        }
         return res.json({
             stats: 200,
             sucess: "Successfully found user products",
