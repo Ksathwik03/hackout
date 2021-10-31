@@ -43,6 +43,7 @@ app.use(
 );
 
 app.use("/", require("./Routes/routes.js"));
+app.use("/product",require("./Routes/productRoutes.js"));
 
 
 io.on('connection', (socket) => {

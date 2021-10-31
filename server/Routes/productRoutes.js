@@ -1,9 +1,12 @@
 const express = require("express");
 const { 
-    addProduct, updateProductStatus
+    addProduct, updateProductStatus, getUserProducts, getAllProducts, getChat
  } = require("../controllers/ProductController");
 const router = express.Router();
 
-router.post('/addProduct', addProduct)
-router.put('/updateProduct',updateProductStatus)
+router.post('/add', addProduct)
+router.put('/update',updateProductStatus)
+router.get('/user',getUserProducts)
 router.get('/',getAllProducts)
+router.get('/:cid',getChat)
+module.exports = router;
