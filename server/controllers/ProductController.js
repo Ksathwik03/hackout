@@ -56,7 +56,7 @@ exports.updateProductStatus = async(req,res) => {
             })
         }
         const product = await Product.findOne({'_id': req.params.pid})
-        product.dealStatus = dealStatus
+        product.dealStatus = true
         await product.save()
         return res.json({
             stats: 200,

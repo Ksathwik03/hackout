@@ -22,8 +22,8 @@ const ProductSchema = new mongoose.Schema({
     required: true
   },
   dealStatus: {
-    type: String,
-    default: "Pending"
+    type: Boolean,
+    default: false
   },
   admin_details: {
     type: Array,

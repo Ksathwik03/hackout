@@ -5,7 +5,7 @@ const {
 const router = express.Router();
 
 router.post('/add', addProduct)
-router.put('/update',updateProductStatus)
+router.put('/update/:pid',updateProductStatus)
 router.get('/user',getUserProducts)
 router.get('/',getAllProducts)
 router.get('/:cid',getChat)
