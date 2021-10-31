@@ -44,7 +44,7 @@ app.use(
 
 app.use("/", require("./Routes/routes.js"));
 app.use("/product",require("./Routes/productRoutes.js"));
-
+app.use("/payment", require("./controllers/stripeController"))
 
 io.on('connection', (socket) => {
     socket.on('join', (room) => {

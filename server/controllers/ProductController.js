@@ -84,9 +84,11 @@ exports.getUserProducts = async(req,res) => {
                 message: "Auth token required"
             })
         }
+        console.log(user)
         const id = user._id
         let products
-        if(user.admin){
+        if(user.admin == true){
+            console.log(2)
             products = await Product.find({})
         }
         else{
